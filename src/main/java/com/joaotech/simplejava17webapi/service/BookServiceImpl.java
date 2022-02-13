@@ -11,7 +11,7 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Service
-public class BookServiceImpl implements BookService {
+public non-sealed class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final EntityManager entityManager;
@@ -27,9 +27,11 @@ public class BookServiceImpl implements BookService {
     }
 
     public List<BookDTO> findByTitle(String title) {
-        String hql = "SELECT book " +
-                "FROM Book book " +
-                "WHERE UPPER(book.title) LIKE UPPER(:title)";
+        String hql = """
+                SELECT book
+                FROM Book book
+                WHERE UPPER(book.title) LIKE UPPER(:title)
+                """;
         Query query = entityManager.createQuery(hql);
         query.setParameter("title", "%" + title + "%");
         List<Book> books = query.getResultList();
@@ -38,9 +40,11 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDTO> findByBestRating() {
-        String hql = "SELECT book " +
-                "FROM Book book " +
-                "ORDER BY book.rating DESC ";
+        String hql = """
+                SELECT book
+                FROM Book book
+                ORDER BY book.rating DESC
+                """;
         Query query = entityManager.createQuery(hql);
         List<Book> books = query.getResultList();
         return BookAdapter.convert(books);

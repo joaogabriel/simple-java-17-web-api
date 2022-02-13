@@ -4,7 +4,7 @@ import com.joaotech.simplejava17webapi.dto.BookDTO;
 
 import java.util.List;
 
-public interface BookService {
+public sealed interface BookService permits BookServiceImpl {
 
     List<BookDTO> findAll();
 
